@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    generate-unique-name: false
+    name: tacocloud
+  thymeleaf:
+    cache: false
+    enable-spring-el-compiler: true
+    encoding: UTF-8
+    mode: HTML
+    prefix: classpath:/templates/
+    servlet:
+      content-type: text/html;charset=UTF-8
+    suffix: .html

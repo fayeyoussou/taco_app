@@ -8,3 +8,8 @@
 .margin-t-10 {
     margin-top: 25px;
 }
+.validationError {
+    color: darkred;
+    font-style: italic;
+    font-size: 10px;
+}

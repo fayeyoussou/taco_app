@@ -1,18 +1,7 @@
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
-<head>
-    <title th:text="${title}">My Taco App</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}" />
-    <link rel="stylesheet" th:href="@{/css/bootstrap/css/bootstrap.min.css}" />
-
-    <script th:src="@{/js/jquery.min.js}"></script>
-    <script th:src="@{/js/popper.min.js}"></script>
-    <script th:src="@{/css/bootstrap/js/bootstrap.min.js}"></script>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 
-</head>
-<body>
-
-<div class="container">
+<div class="container" th:fragment="content">
     <div class="card p-3 shadow margin-t-10">
         <h1>Design your taco!</h1>
         <img class="r-image" th:src="@{/images/taco.jpeg}" alt="taco image"/>
@@ -21,10 +10,13 @@
                 <div class="col-12 col-md-6 mb-4">
                     <div class="form-group">
                         <h3>Designate your wrap:</h3>
+                        <span class="validationError"
+                              th:if="${#fields.hasErrors('ingredients')}" th:errors="*{ingredients}">CC Num Error</span>
                         <div th:each="ingredient : ${wrap}" class="form-check">
                             <input th:field="*{ingredients}" type="checkbox" th:value="${ingredient.id}" class="form-check-input"/>
                             <label th:for="${ingredient.id}" th:text="${ingredient.name}" class="form-check-label"></label>
                         </div>
+
                     </div>
                     <div class="form-group">
                         <h3>Pick your protein:</h3>
@@ -61,12 +53,10 @@
             <div class="form-group margin-10" >
                 <h3>Name your taco creation:</h3>
                 <input type="text" th:field="*{name}" class="form-control"/>
+                <span class="validationError"
+                      th:if="${#fields.hasErrors('name')}" th:errors="*{name}">CC Num Error</span>
             </div>
             <button type="submit" class="btn btn-primary">Submit Your Taco</button>
         </form>
     </div>
 </div>
-</body>
-
-
-</html>

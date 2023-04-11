@@ -1,9 +1,16 @@
 package sn.youdev.entities;
 
-import lombok.Data;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE,force = true)
 public class Ingredient {
+    @Id
     private final String id;
     private final String name;
     private final Type type;
