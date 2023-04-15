@@ -1,7 +1,25 @@
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
   datasource:
-    generate-unique-name: false
-    name: tacocloud
+    password:
+    url: jdbc:mysql://127.0.0.1:3306/taco_app
+    username: root
+  jpa:
+    hibernate:
+      ddl_auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+      show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: true
+  mvc:
+    log-request-details: true
   thymeleaf:
     cache: false
     enable-spring-el-compiler: true
@@ -11,3 +29,8 @@ spring:
     servlet:
       content-type: text/html;charset=UTF-8
     suffix: .html
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

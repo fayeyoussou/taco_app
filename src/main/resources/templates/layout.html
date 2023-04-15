@@ -4,12 +4,19 @@
     <title th:text="${title}">My Taco App</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/material-pink-indigo.css}" />
+    <!-- Import Material Design Icons CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Import Material Design Lite JavaScript -->
+
+
 
 
 </head>
 <body th:insert="${content!=null ? content : 'home'} :: content">
 
 </body>
+    <script defer th:src="@{/js/material.min.js}"></script>
     <script th:src="@{/css/bootstrap/js/bootstrap.js}" crossorigin="anonymous"></script>
     <script th:src="@{/js/jquery.min.js}" ></script>
     <script th:src="@{/js/popper.min.js}" ></script>

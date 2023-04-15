@@ -1,5 +1,6 @@
 package sn.youdev.controller;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import lombok.extern.slf4j.Slf4j;
 import sn.youdev.entities.TacoOrder;
 import org.springframework.validation.Errors;
+import sn.youdev.entities.User;
 import sn.youdev.repository.OrderRepository;
 
 @Slf4j
@@ -28,11 +30,12 @@ public class OrderController {
         return "layout";
     }
     @PostMapping
-    public String processOrder(@Valid TacoOrder order, Errors errors,SessionStatus sessionStatus) {
+    public String processOrder(@Valid TacoOrder order, Errors errors,SessionStatus sessionStatus,@AuthenticationPrincipal User user) {
         if (errors.hasErrors()) {
             log.info("error in Order submittion: {}", errors);
             return "orderForm";
         }
+        order.setUser(user);
         orderRepo.save(order);
         sessionStatus.setComplete();
         return "redirect:/";

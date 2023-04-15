@@ -4,6 +4,7 @@ package sn.youdev.controller;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -54,16 +55,13 @@ public class DesignTacoController {
     }
     @GetMapping
     public String showDesignForm(Model model) {
-        int sum = 70;
-        for (int i = 9; i < 26; i++) {
-            System.out.println(i +" -> "+sum);
-            sum+=17;
-        }
+
         model.addAttribute("title", "Design your Taco");
         model.addAttribute("content", "design");
         return "layout";
     }
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN') || " + "returnObject.user.username == authentication.name")
     public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder) {
         if (errors.hasErrors()) {
             log.info("Error while processing taco", errors);
