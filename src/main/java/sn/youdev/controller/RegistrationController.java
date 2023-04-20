@@ -21,11 +21,7 @@ public class RegistrationController {
     public String registerForm(Model model) {
         model.addAttribute("title", "Fill in order");
         model.addAttribute("content", "registration");
-        int sum = 143;
-        for (int i = 20; i < 31; i++) {
-            System.out.println(i +" -> "+sum);
-            sum+=18;
-        }
+
         return "layout";
     }
     @PostMapping

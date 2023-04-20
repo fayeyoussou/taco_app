@@ -1,5 +1,8 @@
 package sn.youdev.controller;
 import jakarta.validation.Valid;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,10 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import lombok.extern.slf4j.Slf4j;
+import sn.youdev.config.Props;
 import sn.youdev.entities.TacoOrder;
 import org.springframework.validation.Errors;
 import sn.youdev.entities.User;
 import sn.youdev.repository.OrderRepository;
+
+import java.util.Optional;
+
 
 @Slf4j
 @Controller
@@ -20,8 +27,10 @@ import sn.youdev.repository.OrderRepository;
 @SessionAttributes("tacoOrder")
 public class OrderController {
     private OrderRepository orderRepo;
-    public OrderController(OrderRepository orderRepo) {
+    private Props props;
+    public OrderController(OrderRepository orderRepo, Props props) {
         this.orderRepo = orderRepo;
+        this.props = props;
     }
     @GetMapping("/current")
     public String orderForm(Model model) {
@@ -39,5 +48,14 @@ public class OrderController {
         orderRepo.save(order);
         sessionStatus.setComplete();
         return "redirect:/";
+    }
+    @GetMapping("/liste")
+    public String ordersForUser(
+            @AuthenticationPrincipal User user, Model model) {
+        Optional<Pageable> pageableOptional = PageRequest.of(0, 20).toOptional();
+        pageableOptional.ifPresent(pageable -> model.addAttribute("orders", orderRepo.findByUserOrderByPlacedAtDesc(user, pageable)));
+        model.addAttribute("title", "Liste of order");
+        model.addAttribute("content", "order_liste");
+        return "layout";
     }
 }
